@@ -51,12 +51,30 @@
 ```
 
 ```php
+	$apiUrl = "https://abc.com/getdata";
+	$ch = curl_init($apiUrl);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	
+	// Disable SSL certificate verification
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Don't verify the peer's certificate
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Don't verify the host
+	
+	$response = curl_exec($ch);
+	if (curl_errno($ch)) {
+	    echo 'cURL error: ' . curl_error($ch);
+	}
+	curl_close($ch);
+```
+
+```php
 	$datam = array(
-                    "token"=>"9ed47053b4b961842c7d0c9b245b0da4b7b21597",
+                    "token"=>"",
                     "priority"=>"1",
                     "application"=>"8",
                     "globalmedia"=>"$soil_img",
-                    //  "globalmedia"=> "https://services.indevconsultancy.in/image/sss.jpeg",
+                    //  "globalmedia"=> "https://services.com/image/sss.jpeg",
                     "data" => array(array("number"=>"$number","message"=>"$message")),
                     );
                     $dataString =  json_encode($datam);
